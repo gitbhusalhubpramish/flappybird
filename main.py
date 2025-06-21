@@ -5,8 +5,9 @@ from char import Bird
 
 clock = pygame.time.Clock()
 
+# Remove the dummy video driver to allow VNC display
 if platform.system() == "Linux":
-    os.environ['SDL_VIDEODRIVER'] = 'dummy'
+    os.environ['SDL_VIDEODRIVER'] = 'x11'
 
 pygame.init()
 screen = pygame.display.set_mode((600, 400))
