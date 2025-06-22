@@ -1,19 +1,17 @@
 import pygame
 import platform
 import os
-from char import Bird
+from game import game
 
-clock = pygame.time.Clock()
 
 # Remove the dummy video driver to allow VNC display
 if platform.system() == "Linux":
     os.environ['SDL_VIDEODRIVER'] = 'x11'
 
 pygame.init()
-screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('Flappy Bird')
-
-bird = Bird()
+screen = pygame.display.set_mode((600, 400))
+game = game(screen)
 
 running = True
 while running:
@@ -21,9 +19,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((135, 206, 235))  # Sky blue background
-    bird.draw(screen)
-    pygame.display.flip()
-    clock.tick(60)
+    for event in pygame.event.get():
+        
+        game.run(event.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN])
 
 pygame.quit()
