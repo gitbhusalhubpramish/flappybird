@@ -11,13 +11,26 @@ class game:
     self.screen = screen
     self.clock = pygame.time.Clock()
   def run(self, jump):
+    # Limit frame rate first
+    dt = self.clock.tick(60)
+    
+    if not self.game_over:
+      # Apply physics
+      if jump:
+        self.bird.y += self.jump_strength
+      else:
+        self.bird.y += self.gravity
+      
+      # Update pipes
+      for pp in self.pipes:
+        pp.update()
+    
+    # Render everything
     self.screen.fill((135, 206, 235))  # Sky blue background
     self.bird.update()
     self.bird.draw(self.screen)
+    
+    for pp in self.pipes:
+      pp.draw(self.screen)
+    
     pygame.display.flip()
-    self.clock.tick(60)
-    if not self.game_over:
-      self.bird.y += self.gravity if not jump else self.jump_strength
-      for pp in self.pipes:
-        pp.update()
-        pp.draw(self.screen)

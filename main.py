@@ -15,12 +15,13 @@ game = game(screen)
 
 running = True
 while running:
+    jump = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    for event in pygame.event.get():
-        
-        game.run(event.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN])
+        elif event.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN]:
+            jump = True
+    
+    game.run(jump)
 
 pygame.quit()
