@@ -7,7 +7,7 @@ class game:
     self.score = 0
     self.game_over = False
     self.gravity = 0.5
-    self.jump_strength = -10
+    self.jump_strength = -30
     self.screen = screen
     self.clock = pygame.time.Clock()
   def run(self, jump):
