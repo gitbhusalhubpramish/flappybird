@@ -20,11 +20,15 @@ class Bird:
             self.current_frame = (self.current_frame + 1) % self.total_frames
             self.last_update = now
 
-    def draw(self, screen):
+    def draw(self, screen, prevy):
         frame_rect = pygame.Rect(self.current_frame * self.frame_width, 0, self.frame_width, self.frame_height)
         frame = self.sprite_sheet.subsurface(frame_rect)
-        frame = pygame.transform.scale(frame, (30, 20)) 
+        frame = pygame.transform.scale(frame, (50, 35)) 
+        if self.y == prevy:
+            pygame.transform.rotate(frame, -40)
+            print("rotated")
         screen.blit(frame, (self.x, self.y))
+        
 
 
 
@@ -32,7 +36,7 @@ class pipe:
     def __init__(self):
         self.imgraw = pygame.image.load('./image/pipe.png').convert_alpha()
         self.x = 600
-        self.gap = 150
+        self.gap = 200
         self.speed = 5
         self.top_height = random.randint(50, 300)
 
@@ -41,6 +45,8 @@ class pipe:
 
         self.top_y = self.top_height - self.top_img.get_height()
         self.bottom_y = self.top_height + self.gap
+        # self.top_img = pygame.transform.scale(self.top_img, (50, 400))
+        # self.bottom_img = pygame.transform.scale(self.bottom_img, (50, 400))
     def update(self):
         self.x -= self.speed
     def draw(self, screen):

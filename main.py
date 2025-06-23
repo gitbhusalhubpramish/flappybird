@@ -10,7 +10,7 @@ if platform.system() == "Linux":
 
 pygame.init()
 pygame.display.set_caption('Flappy Bird')
-screen = pygame.display.set_mode((600, 400))
+screen = pygame.display.set_mode((600, 600))
 game = game(screen)
 
 running = True
