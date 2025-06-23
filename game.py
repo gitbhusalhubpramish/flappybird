@@ -18,10 +18,10 @@ class game:
     if not self.game_over:
       # Apply physics
       if jump:
-        pygame.transform.rotate(self.bird.sprite_sheet, 90)
         self.prevy = self.bird.y
         self.bird.y += self.jump_strength
       else:
+        self.prevy = self.bird.y
         self.bird.y += self.gravity
       
       # Update pipes
