@@ -6,11 +6,11 @@ class game:
     self.pipes = [pipe()]
     self.score = 0
     self.game_over = False
-    self.gravity = 1.5
+    self.gravity = 1.59
     self.jump_strength = -60
     self.screen = screen
     self.clock = pygame.time.Clock()
-    self.prevy = self.bird.y
+    self.prevy = None
   def run(self, jump):
     # Limit frame rate first
     dt = self.clock.tick(60)
@@ -21,7 +21,6 @@ class game:
         self.prevy = self.bird.y
         self.bird.y += self.jump_strength
       else:
-        self.prevy = self.bird.y
         self.bird.y += self.gravity
       
       # Update pipes
@@ -41,5 +40,9 @@ class game:
       if pp.x == 250:
         self.pipes.append(pipe())
       pp.draw(self.screen)
+      # Check for collisions
+      if self.bird.x + 50 > pp.x and self.bird.x < pp.x + 50:
+        if self.bird.y < pp.top_height or self.bird.y + 35 > pp.bottom_y:
+          self.game_over = True
     
     pygame.display.flip()

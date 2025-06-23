@@ -24,12 +24,14 @@ class Bird:
         frame_rect = pygame.Rect(self.current_frame * self.frame_width, 0, self.frame_width, self.frame_height)
         frame = self.sprite_sheet.subsurface(frame_rect)
         frame = pygame.transform.scale(frame, (50, 35)) 
-        
+        if prevy == None:
+            frame = pygame.transform.rotate(frame, 0)
         # Rotate based on movement direction
-        if self.y < prevy:  # Bird is moving up (jumping)
+        if prevy != None and self.y < prevy:  # Bird is moving up (jumping)
             frame = pygame.transform.rotate(frame, 20)  # Rotate upward
-        elif self.y > prevy:  # Bird is falling
+        elif prevy  != None and self.y > prevy:  # Bird is falling
             frame = pygame.transform.rotate(frame, -20)  # Rotate downward
+        
             
         screen.blit(frame, (self.x, self.y))
         
