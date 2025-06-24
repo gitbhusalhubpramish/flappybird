@@ -21,7 +21,9 @@ while running:
             running = False
         elif event.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN]:
             jump = True
-    
-    game.run(jump)
+    if not game.game_over:
+        game.run(jump)
+    else:
+        game.gameover()
 
 pygame.quit()

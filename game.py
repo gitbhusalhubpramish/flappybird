@@ -11,6 +11,8 @@ class game:
     self.screen = screen
     self.clock = pygame.time.Clock()
     self.prevy = None
+    self.restart = pygame.image.load('./image/restart.png').convert_alpha()
+    # self.restart = pygame.transform.scale(self.restart, (50, 50))
   def run(self, jump):
     # Limit frame rate first
     dt = self.clock.tick(60)
@@ -60,4 +62,7 @@ class game:
       for pp in self.pipes:
         pp.draw(self.screen)
       pygame.display.flip()
-    pygame.time.wait(1000)
+    game_over_text = pygame.font.SysFont('Arial', 50).render('Game Over', True, (0, 0, 0))
+    self.screen.blit(game_over_text, (200, 200))
+    self.screen.blit(self.restart,(200, 300))
+    pygame.display.flip()
