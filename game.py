@@ -26,6 +26,8 @@ class game:
       # Update pipes
       for pp in self.pipes:
         pp.update()
+    else:
+      self.gameover()
         
         
     
@@ -44,5 +46,18 @@ class game:
       if self.bird.x + 50 > pp.x and self.bird.x < pp.x + 50:
         if self.bird.y < pp.top_height or self.bird.y + 35 > pp.bottom_y:
           self.game_over = True
+      if self.bird.y > 600-self.bird.frame_height:
+        self.game_over = True
     
     pygame.display.flip()
+
+  def gameover(self):
+    while self.bird.y < 600-self.bird.frame_height:
+      self.bird.y += self.gravity * 1.5
+      self.screen.fill((135, 206, 235))  # Sky blue background
+      self.bird.update()
+      self.bird.draw(self.screen, self.prevy)
+      for pp in self.pipes:
+        pp.draw(self.screen)
+      pygame.display.flip()
+    pygame.time.wait(1000)
