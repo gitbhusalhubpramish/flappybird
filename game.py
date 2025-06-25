@@ -12,6 +12,7 @@ class game:
     self.clock = pygame.time.Clock()
     self.prevy = None
     self.restart = pygame.image.load('./image/restart.png').convert_alpha()
+    self.score = 0
     # self.restart = pygame.transform.scale(self.restart, (50, 50))
   def run(self, jump):
     # Limit frame rate first
@@ -28,6 +29,7 @@ class game:
       # Update pipes
       for pp in self.pipes:
         pp.update()
+        
     else:
       self.gameover()
         
@@ -36,7 +38,7 @@ class game:
     # Render everything
     self.screen.fill((135, 206, 235))  # Sky blue background
     self.bird.update()
-    self.bird.draw(self.screen, self.prevy)
+    self.bird.draw(self.screen, self.prevy, self.game_over)
     
     for pp in self.pipes:
       if pp.x < -pp.top_img.get_width():
@@ -50,6 +52,10 @@ class game:
           self.game_over = True
       if self.bird.y > 600-self.bird.frame_height:
         self.game_over = True
+      if pp.x == self.bird.x:
+        self.score += 1
+    score_text = pygame.font.SysFont('Arial', 50).render(str(self.score), True, (0, 0, 0))
+    self.screen.blit(score_text, (0, 0))
     
     pygame.display.flip()
 
@@ -58,9 +64,9 @@ class game:
       self.bird.y += self.gravity * 1.5
       self.screen.fill((135, 206, 235))  # Sky blue background
       self.bird.update()
-      self.bird.draw(self.screen, self.prevy)
       for pp in self.pipes:
         pp.draw(self.screen)
+      self.bird.draw(self.screen, self.prevy, self.game_over)
       pygame.display.flip()
     game_over_text = pygame.font.SysFont('Arial', 50).render('Game Over', True, (0, 0, 0))
     self.screen.blit(game_over_text, (200, 200))

@@ -20,7 +20,7 @@ class Bird:
             self.current_frame = (self.current_frame + 1) % self.total_frames
             self.last_update = now
 
-    def draw(self, screen, prevy):
+    def draw(self, screen, prevy, gameover):
         frame_rect = pygame.Rect(self.current_frame * self.frame_width, 0, self.frame_width, self.frame_height)
         frame = self.sprite_sheet.subsurface(frame_rect)
         frame = pygame.transform.scale(frame, (50, 35)) 
@@ -31,7 +31,9 @@ class Bird:
             frame = pygame.transform.rotate(frame, 20)  # Rotate upward
         elif prevy  != None and self.y > prevy:  # Bird is falling
             frame = pygame.transform.rotate(frame, -20)  # Rotate downward
-        
+
+        if gameover:
+            frame = pygame.transform.rotate(frame, -90)
             
         screen.blit(frame, (self.x, self.y))
         
